@@ -1,4 +1,4 @@
-from Domain.companie_aeriana import creeazaRezervare, getId
+from Domain.companie_aeriana import creeazaRezervare, getId, getNume
 
 
 def adaugaRezervare(id, nume, clasa, pret, checkin, lista):
@@ -25,6 +25,19 @@ def getById(id, lista):
     '''
     for rezervare in lista:
         if getId(rezervare) == id:
+            return rezervare
+    return None
+
+
+def getByNume(nume, lista):
+    '''
+    da rezervarea cu id-ul dat dintr-o lista
+    ;param nume: string
+    ;param lista: lista de rezervari
+    return: rezervarea cu id-ul dat din lista, sau None daca aceasta nu exista
+    '''
+    for rezervare in lista:
+        if getNume(rezervare) == nume:
             return rezervare
     return None
 

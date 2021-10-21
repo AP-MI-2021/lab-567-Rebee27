@@ -1,17 +1,17 @@
 from Domain.companie_aeriana import *
 
 
-def trecereClasaSuperioara(stringNume, lista):
+def trecereCLasaSuperioara(numeDat, lista):
     '''
-    trecere rezervarilor facute pe un nume dat la o clasa superioara
+    trecerea rezervarilor facute pe un nume dat la o clasa superioara
     ;param substringNume: string
     ;param lista: lista de rezervari
-    return: lista cu rezervarile dupa modificarea claselor
+    return: lista cu rezervari dupa modificarea claselor
     '''
     listaNoua = []
 
     for rezervare in lista:
-        if getNume(rezervare) == stringNume and getClasa(rezervare) == "economy":
+        if getNume(rezervare) == numeDat and getClasa(rezervare) == "economy":
             rezervareNoua = creeazaRezervare(
                 getId(rezervare),
                 getNume(rezervare),
@@ -20,7 +20,7 @@ def trecereClasaSuperioara(stringNume, lista):
                 getCheckin(rezervare)
             )
             listaNoua.append(rezervareNoua)
-        elif getNume(rezervare) == stringNume and getClasa(rezervare) == "economy plus":
+        elif getNume(rezervare) == numeDat and getClasa(rezervare) == "economy plus":
             rezervareNoua = creeazaRezervare(
                 getId(rezervare),
                 getNume(rezervare),
@@ -29,8 +29,12 @@ def trecereClasaSuperioara(stringNume, lista):
                 getCheckin(rezervare)
             )
             listaNoua.append(rezervareNoua)
-        elif getNume(rezervare) == stringNume and getClasa(rezervare) == "business":
+        elif getClasa(rezervare) == "business":
+            listaNoua.append(rezervare)
+        else:
             listaNoua.append(rezervare)
 
     return listaNoua
+
+
 

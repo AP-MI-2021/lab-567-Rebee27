@@ -1,6 +1,6 @@
 from Logic.CRUD import adaugaRezervare, stergeRezervare, modificaRezervare
 from Domain.companie_aeriana import toStrig
-from Logic.functionalitate import trecereClasaSuperioara
+from Logic.functionalitate import trecereCLasaSuperioara
 
 
 def printMenu():
@@ -41,8 +41,8 @@ def showAll(lista):
 
 
 def uiClasaSuperioasa(lista):
-    substringNume = input("Dati numele pentru care rezervarile se vor trece la o clasa superioara: ")
-    return trecereClasaSuperioara(substringNume, lista)
+    numeDat = input("Dati numele pentru care rezervarile se vor trece la o clasa superioara: ")
+    return trecereCLasaSuperioara(numeDat, lista)
 
 
 def runMenu(lista):

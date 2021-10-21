@@ -34,3 +34,6 @@ def testModificaRezervare():
     assert getPret(getById("2", lista)) == 300
 
 
+
+
+
