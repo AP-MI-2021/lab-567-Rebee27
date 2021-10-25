@@ -1,6 +1,7 @@
 from Logic.CRUD import adaugaRezervare, stergeRezervare, modificaRezervare
 from Domain.companie_aeriana import toStrig
 from Logic.functionalitate2 import trecereCLasaSuperioara
+from Logic.functionalitate4 import pretMaxim
 
 
 def printMenu():
@@ -8,6 +9,7 @@ def printMenu():
     print("2. Stergere rezervare")
     print("3. Modificare rezervare")
     print("4. Trecere la o clasa superioara")
+    print("5. Pretul maxim al fiecarei clase")
     print("a. Afisare rezervari")
     print("x. Iesire")
 
@@ -45,6 +47,10 @@ def uiClasaSuperioasa(lista):
     return trecereCLasaSuperioara(numeDat, lista)
 
 
+def uiPretMaxim(lista):
+    return pretMaxim(lista)
+
+
 def runMenu(lista):
     while True:
         printMenu()
@@ -58,6 +64,8 @@ def runMenu(lista):
             lista = uiModificaRezervare(lista)
         elif optiune == "4":
             lista = uiClasaSuperioasa(lista)
+        elif optiune == "5":
+            print("Pretul maxim pentru clasele economy, economy plus respectiv business sunt: ", uiPretMaxim(lista))
         elif optiune == "a":
             showAll(lista)
         elif optiune == "x":
