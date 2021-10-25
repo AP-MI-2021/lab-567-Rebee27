@@ -1,6 +1,6 @@
 from Logic.CRUD import adaugaRezervare, stergeRezervare, modificaRezervare
 from Domain.companie_aeriana import toStrig
-from Logic.functionalitate import trecereCLasaSuperioara
+from Logic.functionalitate2 import trecereCLasaSuperioara
 
 
 def printMenu():
@@ -64,3 +64,5 @@ def runMenu(lista):
             break
         else:
             print("Optiune gresita. Reincercati! ")
+
+

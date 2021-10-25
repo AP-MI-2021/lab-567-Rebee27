@@ -1,7 +1,6 @@
 from Domain.companie_aeriana import getClasa
 from Logic.CRUD import adaugaRezervare, getById
-from Logic.functionalitate import trecereCLasaSuperioara
-
+from Logic.functionalitate2 import trecereCLasaSuperioara
 
 def testTrecereClasaSuperioasa():
     lista = []
@@ -10,7 +9,7 @@ def testTrecereClasaSuperioasa():
     lista = adaugaRezervare("3", "Popescu", "economy plus", 250, "da", lista)
     lista = adaugaRezervare("4", "Popescu", "business", 400, "nu", lista)
 
-    lista = trecereCLasaSuperioara("popescu", lista)
+    lista = trecereCLasaSuperioara("Popescu", lista)
 
     assert getClasa(getById("1", lista)) == "economy plus"
     assert getClasa(getById("2", lista)) == "business"
