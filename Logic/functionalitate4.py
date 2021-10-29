@@ -7,22 +7,14 @@ def pretMaxim(lista):
     param lista: lista de rezervari
     return: pretul maxim pentru fiecare clasa
     '''
-    lista_max = []
-    max_economy = 0
-    max_economy_plus = 0
-    max_business = 0
+    lista_max = {}
     for rezervare in lista:
-        if getClasa(rezervare) == "economy":
-            if getPret(rezervare) >max_economy:
-                max_economy = getPret(rezervare)
-        elif getClasa(rezervare) == "economy plus":
-            if getPret(rezervare) > max_economy_plus:
-                max_economy_plus = getPret(rezervare)
-        elif getClasa(rezervare) == "business":
-            if getPret(rezervare) > max_business:
-                max_business = getPret(rezervare)
+        clasa = getClasa(rezervare)
+        pret = getPret(rezervare)
+        if clasa in lista_max:
+            if pret > lista_max[clasa]:
+                lista_max[clasa] = pret
+        else:
+            lista_max[clasa] = pret
 
-    lista_max.append(max_economy)
-    lista_max.append(max_economy_plus)
-    lista_max.append(max_business)
     return lista_max

@@ -8,6 +8,8 @@ def ieftinireRezervari(procentajDat, lista):
     param lista: lista de rezervari
     return: lista de rezervari dupa modificarile facute
     '''
+    if int(procentajDat) < 0 or int(procentajDat) > 100:
+        raise ValueError("Procentajul dat trebuie sa fie cuprins intre 0-100")
 
     listaNoua = []
 
@@ -17,7 +19,7 @@ def ieftinireRezervari(procentajDat, lista):
                 getId(rezervare),
                 getNume(rezervare),
                 getClasa(rezervare),
-                getPret(rezervare) - int((procentajDat / 100) * getPret(rezervare)),
+                getPret(rezervare) - int(procentajDat) / 100 * getPret(rezervare),
                 getCheckin(rezervare)
             )
             listaNoua.append(rezervareNoua)

@@ -11,6 +11,8 @@ def trecereCLasaSuperioara(numeDat, lista):
     listaNoua = []
 
     for rezervare in lista:
+        if numeDat is not getNume(rezervare):
+            raise ValueError("Nu exista o rezervare cu numele dat")
         if getNume(rezervare) == numeDat and getClasa(rezervare) == "economy":
             rezervareNoua = creeazaRezervare(
                 getId(rezervare),

@@ -19,8 +19,17 @@ def testStergeRezervare():
     lista = adaugaRezervare("2", "Ionescu", "business", 400, "nu", lista)
 
     lista = stergeRezervare("1", lista)
-
     assert getNume(getById("2", lista)) is not None
+    assert len(lista) == 1
+
+    try:
+        lista = stergeRezervare("3", lista)
+        assert False
+    except ValueError:
+        assert len(lista) == 1
+        assert getById("2", lista) is not None
+    except Exception:
+        assert False
 
 
 def testModificaRezervare():
