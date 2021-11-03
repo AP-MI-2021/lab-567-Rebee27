@@ -1,5 +1,6 @@
 from Logic.CRUD import adaugaRezervare
 from Tests.testAll import runAllTests
+from UI.command_line_console import comanda
 from UI.console import runMenu
 
 

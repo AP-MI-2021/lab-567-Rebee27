@@ -1,5 +1,5 @@
-from Logic.CRUD import adaugaRezervare, stergeRezervare, modificaRezervare
-from Domain.companie_aeriana import toStrig
+from Logic.CRUD import adaugaRezervare, stergeRezervare, modificaRezervare, getById
+from Domain.companie_aeriana import *
 from Logic.functionalitate2 import trecereCLasaSuperioara
 from Logic.functionalitate3 import ieftinireRezervari
 from Logic.functionalitate4 import pretMaxim
@@ -16,39 +16,64 @@ def printMenu():
     print("6. Pretul maxim al fiecarei clase")
     print("7. Ordonare descrescatoare dupa pret")
     print("8. Suma prețurilor pentru fiecare nume.")
+    print("u. Undo")
     print("a. Afisare rezervari")
     print("x. Iesire")
 
 
-def uiAdaugaRezervare(lista):
+def uiAdaugaRezervare(lista, undoList):
     try:
         id = input("Dati id-ul: ")
         nume = input("Dati numele: ")
         clasa = input("Specificati clasa (economy/economy plus/business): ")
         pret = float(input("Dati pretul: "))
         checkin = (input("Specificati daca checkin-ul e facut sau nu: "))
-        return adaugaRezervare(id, nume, clasa, pret, checkin, lista)
+        rezultat =  adaugaRezervare(id, nume, clasa, pret, checkin, lista)
+        undoList.append(lambda: stergeRezervare(id, rezultat))
+        return rezultat
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
 
 
-def uiStergeRezervare(lista):
+def uiStergeRezervare(lista, undoList):
     try:
         id = input("Dati id-ul: ")
-        return stergeRezervare(id, lista)
+
+        rezervareDeSters = getById(id, lista)
+        rezultat =  stergeRezervare(id, lista)
+        undoList.append(lambda: adaugaRezervare(
+            id,
+            getNume(rezervareDeSters),
+            getClasa(rezervareDeSters),
+            getPret(rezervareDeSters),
+            getCheckin(rezervareDeSters),
+            rezultat
+        ))
+        return rezultat
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
 
-def uiModificaRezervare(lista):
+def uiModificaRezervare(lista, undoList):
     try:
         id = input("Dati id-ul rezervarii de modificat: ")
         nume = input("Dati noul nume: ")
         clasa = input("Specificati noua clasa (economy/economy plus/business): ")
         pret = float(input("Dati noul pret: "))
         checkin = (input("Specificati daca checkin-ul e facut sau nu: "))
-        return  modificaRezervare(id, nume, clasa, pret, checkin, lista)
+
+        rezervareVeche = getById(id, lista)
+        rezultat =  modificaRezervare(id, nume, clasa, pret, checkin, lista)
+        undoList.append(lambda: modificaRezervare(
+            id,
+            getNume(rezervareVeche),
+            getClasa(rezervareVeche),
+            getPret(rezervareVeche),
+            getCheckin(rezervareVeche),
+            rezultat
+        ))
+        return rezultat
     except ValueError as ve:
         print("Eroare: {}".format(ve))
         return lista
@@ -91,16 +116,17 @@ def uiSumaPreturilor(lista):
 
 
 def runMenu(lista):
+    undoList = []
     while True:
         printMenu()
         optiune = input("Dati optiunea: ")
 
         if optiune == "1":
-            lista = uiAdaugaRezervare(lista)
+            lista = uiAdaugaRezervare(lista, undoList)
         elif optiune == "2":
-            lista = uiStergeRezervare(lista)
+            lista = uiStergeRezervare(lista, undoList)
         elif optiune == "3":
-            lista = uiModificaRezervare(lista)
+            lista = uiModificaRezervare(lista, undoList)
         elif optiune == "4":
             lista = uiClasaSuperioasa(lista)
         elif optiune == "5":
@@ -111,6 +137,11 @@ def runMenu(lista):
             lista = uiOrdonareDescrescatoare(lista)
         elif optiune== "8":
             uiSumaPreturilor(lista)
+        elif optiune == "u":
+            if len(undoList) > 0:
+                lista = undoList.pop()()
+            else:
+                print("Nu se poate face undo!")
         elif optiune == "a":
             showAll(lista)
         elif optiune == "x":
