@@ -12,6 +12,12 @@ def main():
     lista = adaugaRezervare("3", "Popescu", "economy plus", 250, "da", lista)
     lista = adaugaRezervare("4", "Popescu", "business", 350, "nu", lista)
 
-    runMenu(lista)
+    raspuns = int(input("Doriti sa utilizati meniul 1 sau meniul 2? "))
+    if raspuns == 1:
+        runMenu(lista)
+    elif raspuns == 2:
+        comanda(lista)
+    else:
+        print("Valoare gresita. Reincercati!")
 
 main()

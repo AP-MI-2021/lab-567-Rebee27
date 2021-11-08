@@ -27,3 +27,5 @@ def ieftinireRezervari(procentajDat, lista):
             listaNoua.append(rezervare)
 
     return listaNoua
+
+

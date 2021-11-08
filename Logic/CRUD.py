@@ -1,4 +1,4 @@
-from Domain.companie_aeriana import creeazaRezervare, getId, getNume
+from Domain.companie_aeriana import creeazaRezervare, getId, getNume, getClasa, getCheckin
 
 
 def adaugaRezervare(id, nume, clasa, pret, checkin, lista):
@@ -14,7 +14,16 @@ def adaugaRezervare(id, nume, clasa, pret, checkin, lista):
     '''
     if getById(id, lista) is not None:
         raise ValueError("Id-ul  exista deja!")
+
     rezervare = creeazaRezervare(id, nume, clasa, pret, checkin)
+
+    if getClasa(rezervare) != "economy" and getClasa(rezervare) != "economy plus" and getClasa(
+            rezervare) != "business":
+        raise ValueError("Valoarea clasei nu este valida")
+
+    if getCheckin(rezervare) != "da" and getCheckin(rezervare) != "nu":
+        raise ValueError("Valoarea checkin-ului nu este valida")
+
     return lista + [rezervare]
 
 
@@ -73,8 +82,16 @@ def modificaRezervare(id, nume, clasa, pret, checkin, lista):
     for rezervare in lista:
         if getId(rezervare) == id:
             rezervareNoua = creeazaRezervare(id, nume, clasa, pret, checkin)
+
+            if getClasa(rezervare) != "economy" and getClasa(rezervare) != "economy plus" and getClasa(
+                    rezervare) != "business":
+                raise ValueError("Valoarea clasei nu este valida")
+
+            if getCheckin(rezervare) != "da" and getCheckin(rezervare) != "nu":
+                raise ValueError("Valoarea checkin-ului nu este valida")
             listaNoua.append(rezervareNoua)
         else:
             listaNoua.append(rezervare)
+
     return listaNoua
 

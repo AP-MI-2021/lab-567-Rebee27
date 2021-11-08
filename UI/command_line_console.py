@@ -1,51 +1,85 @@
-from Logic.CRUD import adaugaRezervare, stergeRezervare
 from Domain.companie_aeriana import toStrig
+from Logic.CRUD import adaugaRezervare, stergeRezervare, modificaRezervare
 
 
 def help():
     print("""
-    help -> arata acest meniu
-    add,<id>,<titlu>,<gen>,<pret>,<reducere> -> adauga o vanzare
-    remove,<id> -> sterge o vanzare
-    showall -> arata toate vanzarile
-    exit -> inchide programul
+    help                                        -> arata acest meniue
+    add,<id>,<titlu>,<gen>,<pret>,<reducere>    -> adauga o rezervare
+    delete,<id>                                 -> sterge o rezervare
+    modify,<id>,<titlu>,<gen>,<pret>,<reducere> -> modifica o rezervare
+    showall                                     -> arata toate rezervarile
+    exit                                        -> inchide programul
     """)
 
-def add(rezervari, listaParametrii):
-    id = listaParametrii[1]
-    nume = listaParametrii[2]
-    clasa = listaParametrii[3]
-    pret = listaParametrii[4]
-    checkin = listaParametrii[5]
 
-    return adaugaRezervare(id, nume, clasa, pret, checkin, rezervari)
+def add(rezervareNoua, lista):
+    try:
+        id = rezervareNoua[1]
+        nume = rezervareNoua[2]
+        clasa = rezervareNoua[3]
+        pret = float(rezervareNoua[4])
+        checkin = rezervareNoua[5]
+        return adaugaRezervare(id, nume, clasa, pret, checkin, lista)
+    except ValueError as ve:
+        print("Eroare: ", ve)
+    return lista
 
-def delete(rezervari, listaParametrii):
-    id = listaParametrii[1]
 
-    return stergeRezervare(id, rezervari)
+def delete(rezervareStearsa, lista):
+    try:
+        id = int(rezervareStearsa[1])
 
-def showAll(rezervari):
-    for rezervare in rezervari:
+        lista = stergeRezervare(id, lista)
+    except ValueError as ve:
+        print("Eroare: ", ve)
+    return lista
+
+
+def modify(rezervareModificata, lista):
+    try:
+        id = int(rezervareModificata[1])
+        nume = str(rezervareModificata[2])
+        clasa = str(rezervareModificata[3])
+        pret = float(rezervareModificata[4])
+        checkin = str(rezervareModificata[5])
+        lista = modificaRezervare(id, nume, clasa, pret, checkin, lista)
+    except ValueError as ve:
+        print("Eroare: ", ve)
+    return lista
+
+def showAll(lista):
+    for rezervare in lista:
         print(toStrig(rezervare))
 
-def comanda(rezervari):
+
+def comanda(lista):
+    lista = []
     exit = False
-    while exit == False:
-        print("Introduceti comanda/comenzile separate prin ';' :")
-        comenzi_introduse = input()
+    try:
+        while exit == False:
+            comenzi = input("Introduceti comanda/comenzile separate prin ';' :")
+            comenzi = comenzi.split(";")
 
-        comenzi = comenzi_introduse.split(";")
-        for comanda in comenzi:
-            listaParametrii = comanda.split(",")
+            for comanda in comenzi:
+                comanda = comanda.split(",")
+                rezervari = []
 
-            if listaParametrii[0] == "help":
-                help()
-            elif listaParametrii[0] == "add":
-                rezervari = add(rezervari, listaParametrii)
-            elif listaParametrii[0] == "showall":
-                showAll(rezervari)
-            elif listaParametrii[0] == "exit":
-                exit = True
-
-
+                for detalii in comanda:
+                    rezervari.append(detalii)
+                if rezervari[0] == "help":
+                    help()
+                elif rezervari[0] == "add":
+                    lista = add(rezervari, lista)
+                elif rezervari[0] == "delete":
+                    lista = delete(rezervari, lista)
+                elif rezervari[0] == "modify":
+                    lista = modify(rezervari, lista)
+                elif rezervari[0] == "showall":
+                    showAll(lista)
+                elif rezervari[0] == "exit":
+                    exit = True
+                else:
+                    print("Comanda gresita. Reincercati!")
+    except ValueError as ve:
+        print("Eroare!", ve)

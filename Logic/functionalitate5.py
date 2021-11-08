@@ -16,3 +16,4 @@ def ordonareDescrescatoare(lista):
     lista_preturi.sort(key=getPret, reverse=True)
 
     return lista_preturi
+
