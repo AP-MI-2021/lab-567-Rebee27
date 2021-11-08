@@ -26,23 +26,22 @@ def add(rezervareNoua, lista):
     return lista
 
 
-def delete(rezervareStearsa, lista):
+def delete(rezervareDeSters, lista):
     try:
-        id = int(rezervareStearsa[1])
-
+        id = rezervareDeSters[1]
         lista = stergeRezervare(id, lista)
     except ValueError as ve:
         print("Eroare: ", ve)
     return lista
 
 
-def modify(rezervareModificata, lista):
+def modify(rezervareDeModificat, lista):
     try:
-        id = int(rezervareModificata[1])
-        nume = str(rezervareModificata[2])
-        clasa = str(rezervareModificata[3])
-        pret = float(rezervareModificata[4])
-        checkin = str(rezervareModificata[5])
+        id = rezervareDeModificat[1]
+        nume = rezervareDeModificat[2]
+        clasa = rezervareDeModificat[3]
+        pret = rezervareDeModificat[4]
+        checkin = rezervareDeModificat[5]
         lista = modificaRezervare(id, nume, clasa, pret, checkin, lista)
     except ValueError as ve:
         print("Eroare: ", ve)
