@@ -74,7 +74,7 @@ def modificaRezervare(id, nume, clasa, pret, checkin, lista):
     ;param pret: float
     ;param checkin: bool
     ;param lista: lista de rezervari
-    return: lista cu rezervarea identificata prin id modificata
+    return: lista cu rezervarea identificata prin id modificata*.
     '''
     if getById(id,lista) is None:
         raise ValueError("Nu exista o rezervare cu id-ul dat")
